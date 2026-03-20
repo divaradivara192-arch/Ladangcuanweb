@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title id="webTitle">Sewa WhatsApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: linear-gradient(135deg, #020617, #0f172a);
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 420px;
+      margin: auto;
+      padding: 30px 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .profile {
+      width: 100px;
+      border-radius: 50%;
+      border: 3px solid #22c55e;
+    }
+
+    .desc {
+      font-size: 14px;
+      color: #94a3b8;
+    }
+
+    .jam {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #22c55e;
+      line-height: 1.5;
+    }
+
+    .counter {
+      margin: 15px 0;
+      font-size: 13px;
+      color: #22c55e;
+    }
+
+    .link {
+      display: block;
+      background: #1e293b;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 12px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: 0.3s;
+      animation: shake 2s infinite;
+    }
+
+    @keyframes shake {
+      0%,100% {transform: translateX(0);}
+      50% {transform: translateX(3px);}
+    }
+
+    .daftar {
+      box-shadow: 0 0 10px #22c55e;
+    }
+
+    .benefit, .testimoni {
+      background: #020617;
+      border: 1px solid #22c55e;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: left;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+
+    .title {
+      text-align: center;
+      color: #22c55e;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .money {
+      position: fixed;
+      top: -50px;
+      font-size: 20px;
+      animation: fall linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(110vh); }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<img src="https://via.placeholder.com/150" class="profile">
+
+<h1 id="judul">Cuan dari WhatsApp 💸</h1>
+
+<p class="desc">Cara mudah hasilkan uang hanya dari chat!</p>
+
+<div class="jam" id="jam">Loading...</div>
+
+<div class="counter" id="counter">👥 12.531 orang sudah bergabung</div>
+
+<a class="link daftar" href="https://terimawa.com/signup?ref=91906">🚀 Daftar</a>
+<a class="link daftar" href="https://gabungwa.com/signup?ref=71847">🔥 Daftar</a>
+<a class="link" href="https://whatsapp.com/channel/0029VbC1MHP1t90bIcMBrQ14">📢 Join Channel</a>
+
+<div class="benefit">
+<div class="title">🔥 KEUNTUNGAN 🔥</div>
+✔ Aman dari scam <br>
+✔ 1 chat tetap dibayar <br>
+✔ WD cepat <br>
+✔ Bisa ajak teman & dapat komisi <br>
+✔ Sistem 24 jam aktif
+</div>
+
+<div class="testimoni">
+<div class="title">💬 TESTIMONI</div>
+"Baru 2 hari udah WD!" 🔥<br>
+"Gampang banget, tinggal chat doang" 💸<br>
+"Auto cuan tiap hari!" 🚀
+</div>
+
+</div>
+
+<!-- 🔊 SOUND UANG -->
+<audio id="moneySound" preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5d5e7c8b7b.mp3?filename=coins-49724.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const newTitle = params.get("judul");
+  if (newTitle) {
+    document.getElementById("judul").innerText = newTitle;
+    document.title = newTitle;
+  }
+
+  let count = 12531;
+  setInterval(() => {
+    count++;
+    document.getElementById("counter").innerText =
+      "👥 " + count.toLocaleString() + " orang sudah bergabung";
+  }, 3000);
+
+  // JAM + STATUS
+  function updateJam() {
+    const now = new Date();
+
+    function getTime(offset) {
+      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+      return new Date(utc + (3600000 * offset));
+    }
+
+    function formatTime(date) {
+      return date.toLocaleTimeString("en-US", {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+    }
+
+    function getStatus(hour) {
+      if (hour < 5) return "🌙 Tengah Malam";
+      if (hour < 11) return "🌅 Pagi";
+      if (hour < 15) return "☀️ Siang";
+      if (hour < 18) return "🌇 Sore";
+      return "🌃 Malam";
+    }
+
+    const wib = getTime(7);
+    const wita = getTime(8);
+    const wit = getTime(9);
+
+    document.getElementById("jam").innerHTML =
+      "🕐 WIB: " + formatTime(wib) +
+      " | WITA: " + formatTime(wita) +
+      " | WIT: " + formatTime(wit) +
+      "<br>📍 Saat ini: <b>" + getStatus(wib.getHours()) + "</b>";
+  }
+
+  setInterval(updateJam, 1000);
+  updateJam();
+
+  // ANIMASI UANG
+  function createMoney() {
+    const money = document.createElement("div");
+    money.classList.add("money");
+    money.innerText = "💸";
+    money.style.left = Math.random() * 100 + "vw";
+    money.style.animationDuration = (Math.random() * 3 + 2) + "s";
+    document.body.appendChild(money);
+    setTimeout(() => money.remove(), 5000);
+  }
+  setInterval(createMoney, 500);
+
+  // POPUP WD + SOUND
+  const names = ["Hanz","Rizky","Aldi","Fajar","Dika","Salsa","Putri","Nanda","Vino","Raka"];
+
+  function getRandomUser() {
+    return names[Math.floor(Math.random() * names.length)] + Math.floor(Math.random()*999);
+  }
+
+  function randomAmount() {
+    const r = Math.random();
+    if (r < 0.5) return (Math.floor(Math.random()*9)+1)*10000;
+    if (r < 0.85) return (Math.floor(Math.random()*9)+1)*100000;
+    return (Math.floor(Math.random()*5)+1)*1000000;
+  }
+
+  function formatRupiah(a) {
+    return "Rp" + a.toLocaleString("id-ID");
+  }
+
+  function getDateTime() {
+    const now = new Date();
+    const tanggal = now.toLocaleDateString("id-ID", {
+      day: 'numeric', month: 'long', year: 'numeric'
+    });
+    const jam = now.toLocaleTimeString("en-US", {
+      hour: '2-digit', minute: '2-digit', hour12: true
+    });
+    return `${tanggal} • ${jam}`;
+  }
+
+  function playSound() {
+    const sound = document.getElementById("moneySound");
+    sound.currentTime = 0;
+    sound.play();
+  }
+
+  function showWDNotif() {
+    const notif = document.createElement("div");
+
+    notif.style.position = "fixed";
+    notif.style.bottom = "20px";
+    notif.style.left = "20px";
+    notif.style.background = "#22c55e";
+    notif.style.color = "black";
+    notif.style.padding = "12px 15px";
+    notif.style.borderRadius = "10px";
+    notif.style.fontSize = "12px";
+    notif.style.zIndex = "999";
+
+    notif.innerHTML =
+      "🔔 <b>" + getRandomUser() + "</b><br>" +
+      "berhasil menarik <b>" + formatRupiah(randomAmount()) + "</b> 💸<br>" +
+      "<small>" + getDateTime() + " • baru saja</small>";
+
+    document.body.appendChild(notif);
+
+    playSound(); // 🔊 suara uang
+
+    setTimeout(() => notif.remove(), 5000);
+  }
+
+  setInterval(showWDNotif, 6000);
+</script>
+
+</body>
+</html>
